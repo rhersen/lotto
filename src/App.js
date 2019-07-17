@@ -1,12 +1,9 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
 
-function App() {
-  return (
-    <div className="App">
+class App extends Component {
+  render() {
+    return (<div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           lotto-joker
         </p>
@@ -19,8 +16,13 @@ function App() {
           Learn React
         </a>
       </header>
-    </div>
-  );
+    </div>);
+  }
+
+  async componentDidMount() {
+    let response = await fetch('/.netlify/functions/node-fetch')
+    console.log(await response.json());
+  }
 }
 
 export default App;
