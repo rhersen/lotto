@@ -1,27 +1,34 @@
 import React, {Component} from 'react';
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {drawResult: []}
+  }
+
   render() {
     return (<div className="App">
       <header className="App-header">
         <p>
           lotto-joker
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <ol>
+          {this.state.drawResult.map(a => <li key={a.type}><span>{a.description}</span>
+            <ol>{a.drawNumbers.map(b => <li key={b.type}><span>{b.description}</span>
+              <ul>{b.numbers.map(c => <li key={c}>{c}</li>)}</ul>
+            </li>)}</ol>
+          </li>)}
+        </ol>
       </header>
     </div>);
   }
 
   async componentDidMount() {
     let response = await fetch('/.netlify/functions/node-fetch')
-    console.log(await response.json());
+    let json = await response.json()
+    let drawResult = json.result.drawResult
+    console.log(drawResult);
+    this.setState({drawResult})
   }
 }
 
